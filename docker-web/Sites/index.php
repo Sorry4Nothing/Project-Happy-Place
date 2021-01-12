@@ -2,11 +2,11 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ol/ol.github.io@master/en/v6.5.0/css/ol.css" type="text/css">
     <link rel="stylesheet" href="Assets/css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
-    <title>OpenLayers example</title>
+    <script src="https://cdn.jsdelivr.net/gh/ol/ol.github.io@master/en/v6.5.0/build/ol.js"></script>
+    <title>ol example</title>
 </head>
 
 <body>
@@ -31,9 +31,10 @@
             ],
             view: new ol.View({
                 center: ol.proj.fromLonLat([8.52074800985474, 47.36022860676095]),
-                zoom: 18
+                zoom: 8
             })
         });
+        // TODO: On click marker zoom to it
 
         function add_map_point(lng, lat) {
             var vectorLayer = new ol.layer.Vector({
@@ -51,15 +52,18 @@
                     })
                 })
             });
-            map.setView(new ol.View({
+            /*"map.setView(new ol.View({
                 center: ol.proj.transform([lng, lat], 'EPSG:4326', 'EPSG:3857'),
-                zoom: 17
-            }));
+                zoom: 10
+            }));*/
             map.addLayer(vectorLayer);
+
         }
     </script>
+
     <?php
-    $servername = "mysql";
+
+    $servername = "db";
     $username = "root";
     $password = "secret";
     $dbname = "happyplace";
@@ -73,6 +77,7 @@
     $sql_all = "SELECT * FROM apprentices;";
     $result_all = $conn->query($sql_all);
 
+    // echo "<script>";
     while ($row = mysqli_fetch_assoc($result_all)) {
         $sql_place_list = "SELECT latitude, longitude FROM places WHERE id=" . $row['place_id'] . ";";
         $sql_marker_color = "SELECT color FROM markers WHERE id=" . $row['place_id'] . ";";
@@ -81,19 +86,20 @@
         $row_place_list = $result_place_list->fetch_array(MYSQLI_BOTH);
         $row_marker_color = $result_marker_color->fetch_array(MYSQLI_BOTH);
         $urlcolor = str_replace("#", "", $row_marker_color[0]);
-        echo "
-        <script type='text/javascript'>
-            add_map_point(" . $row_place_list[1] . ", " . $row_place_list[0] . ", '" . $urlcolor . "');
-        </script>";
+        echo "<script>
+                add_map_point($row_place_list[1], $row_place_list[0], '$urlcolor');
+                </script>
+            ";
     }
+    // echo "console.log('test');";
 
-    echo "</div>";
+
     if (isset($_POST['submit-search'])) {
         $searchedperson = $_POST['personsearch'];
         $searchedperson_last = $_POST['personsearch-last'];
-        $sql_full = "SELECT * FROM apprentices WHERE prename='" . $searchedperson . "' AND lastname='$searchedperson_last';";
+        $sql_full = "SELECT * FROM apprentices WHERE prename='" . $searchedperson . "' OR lastname='$searchedperson_last';";
         $result_full = $conn->query($sql_full);
-        $sql_appr = "SELECT prename, lastname FROM apprentices WHERE prename='" . $searchedperson . "' AND lastname='$searchedperson_last';";
+        $sql_appr = "SELECT prename, lastname FROM apprentices WHERE prename='" . $searchedperson . "' OR lastname='$searchedperson_last';";
         $result_appr = $conn->query($sql_appr);
         if ($result_full->num_rows > 0) {
             $row_full = $result_full->fetch_array(MYSQLI_BOTH);
@@ -109,10 +115,10 @@
         } else {
             echo "<p id='result-id' class='result'>0 results</p>";
         }
-        echo "
-        <script type='text/javascript'>
-            add_map_point(" . $row_places[1] . ", " . $row_places[0] . ");
-        </script>";;
+        /*echo "
+        <script>
+            add_map_point(" . $row_places[0] . ", " . $row_places[1] . ");
+        </script>";*/
     }
     $conn->close();
     ?>
