@@ -58,4 +58,5 @@ services:
         links:
             - mysql
         environment:
-            pma_host: mysql
+            PMA_HOST: mysql
+            PMA_ARBITRARY: 1
