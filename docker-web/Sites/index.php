@@ -69,6 +69,25 @@
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
+
+    $sql_all = "SELECT * FROM apprentices;";
+    $result_all = $conn->query($sql_all);
+
+    while ($row = mysqli_fetch_assoc($result_all)) {
+        $sql_place_list = "SELECT latitude, longitude FROM places WHERE id=" . $row['place_id'] . ";";
+        $sql_marker_color = "SELECT color FROM markers WHERE id=" . $row['place_id'] . ";";
+        $result_marker_color = $conn->query($sql_marker_color);
+        $result_place_list = $conn->query($sql_place_list);
+        $row_place_list = $result_place_list->fetch_array(MYSQLI_BOTH);
+        $row_marker_color = $result_marker_color->fetch_array(MYSQLI_BOTH);
+        $urlcolor = str_replace("#", "", $row_marker_color[0]);
+        echo "
+        <script type='text/javascript'>
+            add_map_point(" . $row_place_list[1] . ", " . $row_place_list[0] . ", '" . $urlcolor . "');
+        </script>";
+    }
+
+    echo "</div>";
     if (isset($_POST['submit-search'])) {
         $searchedperson = $_POST['personsearch'];
         $searchedperson_last = $_POST['personsearch-last'];

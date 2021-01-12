@@ -9,27 +9,27 @@
 </head>
 
 <body>
-    <a href="index.php">Go Back</a>
-    <form action="register.php" method="post" id="register-form">
+    <a href="index.php" style="border-radius: 15px;">Go Back</a>
+    <form action=" register.php" method="post" id="register-form">
         <h3 style="margin-bottom:15px;font-size:20px; font-weight: bold;">Personal Data</h3>
         <label for="getfirstname">Firstname</label>
-        <input placeholder="Firstname" name="firstname" autocomplete="off" type="text" id="getfirstname"><br>
-        <label for="getlastname">Lastname</label>
-        <input placeholder="Lastname" name="lastname" autocomplete="off" type="text" id="getlastname"><br>
+        <input placeholder="Firstname" name="firstname" autocomplete="off" type="text" id="getfirstname" style="border-radius: 15px;"><br>
+        <label for=" getlastname">Lastname</label>
+        <input placeholder="Lastname" name="lastname" autocomplete="off" type="text" id="getlastname" style="border-radius: 15px;"><br>
         <h3 style="margin-bottom:15px;font-size:20px;font-weight: bold;">Coordinates</h3>
         <label for="getlatitude">Longitude</label>
-        <input placeholder="Longitude" name="latitude" autocomplete="off" type="text" id="getlatitude"><br>
-        <label for="getlongitude">Latitude</label>
-        <input placeholder="Latitude" name="longitude" autocomplete="off" type="text" id="getlongitude"><br>
-        <input type="color" name="color" id="colorpicker" value="#0000ff">
-        <button type="submit" name="submit" class="registerbtn">Register</button>
+        <input placeholder="Longitude" name="latitude" autocomplete="off" type="text" id="getlatitude" style="border-radius: 15px;"><br>
+        <label for=" getlongitude">Latitude</label>
+        <input placeholder="Latitude" name="longitude" autocomplete="off" type="text" id="getlongitude" style="border-radius: 15px;"><br>
+        <input type="color" name="color" id="colorpicker" value="#0000ff" style="border-radius: 15px;">
+        <button type=" submit" name="submit" class="registerbtn" style="border-radius: 15px;">Register</button>
     </form>
     <?php
     session_start();
-    $servername = "mysql27j09.db.hostpoint.internal";
-    $username = "dekinotu_user1";
-    $password = "CBXG2pfrpKkDWsG";
-    $dbname = "dekinotu_happyplace";
+    $servername = "mysql27j08.db.hostpoint.internal";
+    $username = "pifigese_Nothin";
+    $password = "spedy=1Ar";
+    $dbname = "pifigese_happyplacepj";
     $errors = array();
     // $queryString = http_build_query([
     //     'access_key' => '9b0d4ce6c220fed4874b61140ec1c163',
