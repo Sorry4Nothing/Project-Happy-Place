@@ -36,7 +36,7 @@
         });
         // TODO: On click marker zoom to it
 
-        function add_map_point(lng, lat) {
+        function add_map_point(lng, lat, color) {
             var vectorLayer = new ol.layer.Vector({
                 source: new ol.source.Vector({
                     features: [new ol.Feature({
@@ -48,7 +48,7 @@
                         anchor: [0.5, 0.5],
                         anchorXUnits: "fraction",
                         anchorYUnits: "fraction",
-                        src: "https://upload.wikimedia.org/wikipedia/commons/e/ec/RedDot.svg"
+                        src: "/dot.php?color=" + color
                     })
                 })
             });
